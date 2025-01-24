@@ -6,31 +6,39 @@ import { Suspense } from 'react'
 import { getPost } from '@/lib/data'
 
 // FETCH DATA WITH AN API
-// const getData = async (slug) => {
-//   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`, {cache: 'no-store'})
+const getData = async (slug) => {
+  // const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`, {cache: 'no-store'})
+  const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
 
-//   if (!res.ok) {
-//     throw new Error('Something went wrong')
-//   }
+  if (!res.ok) {
+    throw new Error('Something went wrong')
+  }
 
-//   return res.json()
-// } 
+  return res.json()
+} 
+
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params;
+
+  const post = await getData(slug);
+
+  return {
+    title: post.title,
+    description: post.desc
+  }
+}
 
 const SingplePostPage = async ({params}) => {
 
   const {slug} = params;
 
   // FETCH DATA WITH AN API
-  // const post = await getData(slug);
+  const post = await getData(slug);
 
   // FETCH DATA WITHOUT AN API
-  // console.log(post)
+  // const post = await getPost(slug);
 
-  console.log(slug)
-
-  const post = await getPost(slug)
-
-  // console.log(post)s
+  console.log(post);
 
   return (
     <div className={styles.container}>
@@ -42,12 +50,12 @@ const SingplePostPage = async ({params}) => {
         <div className={styles.detail}>
           
           {post && (<Suspense fallback={<div>Loading...</div>} >
-            <PostUser userId={post.userId} />
+            {/* <PostUser userId={post.userId} /> */}
           </Suspense>)}
-          <div className={styles.detailText}>
+          {/* <div className={styles.detailText}>
             <span className={styles.detailAuthor}>Published</span>
             <span className={styles.detailValue}>{post.createdAt.toString().slice(4,16)}</span>
-          </div>
+          </div> */}
         </div>
         <div className={styles.content}>
           {post.title}

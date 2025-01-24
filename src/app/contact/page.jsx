@@ -1,5 +1,5 @@
 
-"use client"
+// "use client"
 // import { useEffect, useState } from 'react';
 import styles from './contact.module.css'
 import Image from 'next/image'
@@ -7,6 +7,11 @@ import dynamic from 'next/dynamic';
 // import HyrationTest from '@/components/hydrationTest';
 
 // const HydrationTestNoSSR = dynamic(() => import("@/components/hydrationTest"), {ssr: false})
+
+export const metadata = {
+  title: 'Contact page',
+  description: 'Contact description',
+}
 
 const ContactPage = () => {
   // const [isClient, setIsClient] = useState(false)
